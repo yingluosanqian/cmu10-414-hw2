@@ -141,7 +141,7 @@ class DivScalar(TensorOp):
 
     def compute(self, a):
         ### BEGIN YOUR SOLUTION
-        return a / self.scalar
+        return array_api.divide(a, self.scalar)
         ### END YOUR SOLUTION
 
     def gradient(self, out_grad: Tensor, node: Tensor):
@@ -221,12 +221,13 @@ def broadcast_to(a, shape):
 
 
 class Summation(TensorOp):
-    def __init__(self, axes: Optional[tuple] = None):
+    def __init__(self, axes: Optional[tuple] = None, keepdims: bool = False):
         self.axes = axes
+        self.keepdims = keepdims
 
     def compute(self, a):
         ### BEGIN YOUR SOLUTION
-        return array_api.sum(a, axis=self.axes)
+        return array_api.sum(a, axis=self.axes, keepdims=self.keepdims)
         ### END YOUR SOLUTION
 
     def gradient(self, out_grad: Tensor, node: Tensor):
@@ -243,8 +244,8 @@ class Summation(TensorOp):
         ### END YOUR SOLUTION
 
 
-def summation(a, axes=None):
-    return Summation(axes)(a)
+def summation(a, axes=None, keepdims=False):
+    return Summation(axes, keepdims)(a)
 
 
 class MatMul(TensorOp):
