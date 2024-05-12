@@ -99,7 +99,7 @@ class Linear(Module):
         ### BEGIN YOUR SOLUTION
         Y = X @ self.weight
         if hasattr(self, "bias"):
-            Y = Y + self.bias.bradcast(self.weight.shape)
+            Y = Y + self.bias.broadcast_to(Y.shape)
         return Y
         ### END YOUR SOLUTION
 
